@@ -1,11 +1,10 @@
 class DocumentosController < ApplicationController
   before_action :set_documento, only: [:show, :update, :destroy]
+  before_action :authenticate_usuario!
 
   # GET /documentos
   def index
     @documentos = Documento.all
-
-    render json: @documentos
   end
 
   # GET /documentos/1
@@ -15,11 +14,11 @@ class DocumentosController < ApplicationController
 
   # POST /documentos
   def create
-    @documento = Documento.new(:nome => params[:nome], :blob => params[:blob].read)
+    @documento = Documento.new(documento_params)
     # @documento = Documento.new(documento_params)
 
     if @documento.save
-      render json: @documento, status: :created, location: @documento
+      render :show, status: :created, location: @documento
     else
       render json: @documento.errors, status: :unprocessable_entity
     end
@@ -28,7 +27,7 @@ class DocumentosController < ApplicationController
   # PATCH/PUT /documentos/1
   def update
     if @documento.update(documento_params)
-      render json: @documento
+      render :show
     else
       render json: @documento.errors, status: :unprocessable_entity
     end
@@ -47,7 +46,7 @@ class DocumentosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def documento_params
-      params.require(:documento).permit(:nome, :blob)
+      params.permit(:nome, :blob)
     end
 end
 

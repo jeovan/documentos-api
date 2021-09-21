@@ -1,2 +1,3 @@
 class Documento < ApplicationRecord
+  
 end
