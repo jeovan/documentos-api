@@ -3,7 +3,8 @@ class Documento < ApplicationRecord
   validate :validar_tipo
 
   def validar_tipo
-    unless ['application/pdf','image/png','image/jpeg'].include?(@tipo)
+    puts @tipo.inspect
+    unless ['application/pdf','image/png','image/jpeg','text/plain'].include?(@tipo)
       errors.add(:blob, 'tipo de arquivo não permitido')
     end
 

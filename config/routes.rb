@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  apipie
   mount_devise_token_auth_for 'Usuario', at: 'auth'
   resources :documentos do
     get :download
